@@ -59,7 +59,27 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'bootstrap4',
+    'formtools',
+    'crispy_forms',
+    'django_inlinecss',
 ]
+
+# CELERY configurations
+CELERY_BROKER_URL = 'amqp://localhost'
+
+INSTALLED_APPS += (
+    'djcelery_email',
+    'django_celery_results'
+)
+
+CELERY_EMAIL_TASK_CONFIG = {
+    'name': 'djcelery_email_send',
+    'ignore_result': False,
+}
+
+CELERY_RESULT_BACKEND = 'django-db'
+
+EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -185,6 +205,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]

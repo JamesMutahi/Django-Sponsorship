@@ -34,7 +34,7 @@
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <a class="navbar-brand" href="#">SPONSORSHIPS</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,26 +53,29 @@
                 <a class="nav-item nav-link" href="{% url 'apply' %}">APPLY</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link" href="/accounts/logout/">Logout</a>
+                <a class="nav-item nav-link" href="{% url 'account_logout' %}">Logout</a>
             </li>
             {% else %}
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    Login/Registration
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'account_login' %}">Login</a>
-                    <a class="dropdown-item" href="{% url 'account_signup' %}">Register</a>
-                </div>
+            <li class="nav-item">
+                <a class="nav-item nav-link" href="{% url 'account_login' %}">Login</a>
             </li>
             {% endif %}
         </ul>
     </div>
 </nav>
-
+<div class="fixed-top mt-5">
+    <ul>
+        {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+        </div>
+        {% endfor %}
+    </ul>
+</div>
 {% block content%}
-<div class="container mt-5">
     {% if messages %}
     <div>
         <ul>
@@ -87,7 +90,6 @@
         </ul>
     </div>
     {% endif %}
-</div>
 {% endblock %}
 
 {% block content_extra %}

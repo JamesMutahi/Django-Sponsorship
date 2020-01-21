@@ -4,18 +4,6 @@
 
 {% block content %}
 {% if messages %}
-<div>
-    <ul>
-        {% for message in messages %}
-        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            {{ message }}
-        </div>
-        {% endfor %}
-    </ul>
-</div>
 {% endif %}
 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -29,7 +17,7 @@
             <div class="carousel-caption d-none d-md-block">
                 <h5>Apply Sponsorship</h5>
                 <p>Don't wait. Apply today.</p>
-                <button class="btn btn-outline-success">APPLY</button>
+                <a href="{% url 'apply' %}" class="btn btn-outline-success">APPLY</a>
             </div>
         </div>
         <div class="carousel-item">
@@ -46,7 +34,6 @@
                 <h5>Our Mission</h5>
                 <p>Opportunity to all</p>
                 <button class="btn btn-primary">READ MORE</button>
-
             </div>
         </div>
     </div>
