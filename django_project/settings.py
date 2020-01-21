@@ -17,6 +17,7 @@ import django_heroku
 import dj_database_url
 from decouple import config, Csv
 from django.urls import reverse_lazy
+from django.contrib.messages import constants as messages
 
 MODE = config('MODE', default="dev")
 
@@ -94,6 +95,8 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy('account_confirm_complete')
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy('account_confirm_complete')
+LOGIN_REDIRECT_URL = 'home'
+ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login"
 
 ROOT_URLCONF = 'django_project.urls'
 
@@ -114,6 +117,14 @@ TEMPLATES = [
         },
     },
 ]
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
 
 WSGI_APPLICATION = 'django_project.wsgi.application'
 
@@ -139,7 +150,6 @@ else:
     DATABASES = {
         'default': db_config
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -186,4 +196,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals(), databases=False)
-
