@@ -4,13 +4,11 @@ from django.core.mail import send_mail
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import os
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
     ListView,
     DetailView,
-    CreateView,
     UpdateView,
-    DeleteView,
 )
 
 from sponsorship.models import Applicant
@@ -71,18 +69,22 @@ class ApplicationsListView(ListView, LoginRequiredMixin):
     template_name = 'sponsorship/application_view.html'
     context_object_name = 'applications'
     paginate_by = 5
-    order_by = "-date_posted"
 
     def get_queryset(self):
-        return Applicant.objects.all()
+        if self.request.user.groups.filter(name='sponsor').exists():
+            return Applicant.objects.filter(valid=True).order_by('-date_posted')
+        else:
+            return Applicant.objects.all().order_by('-date_posted')
 
 
 class ApplicationDetailView(DetailView, LoginRequiredMixin):
     model = Applicant
+    template_name = 'sponsorship/application_detail.html'
 
 
 class ApplicantUpdateView(UpdateView, LoginRequiredMixin):
     model = Applicant
+    template_name = 'sponsorship/application_update.html'
     fields = ['valid']
 
     def form_valid(self, form):

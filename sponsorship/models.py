@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 
 
@@ -15,9 +16,12 @@ class Applicant(models.Model):
     year_of_completion = models.IntegerField()
     reasons = models.TextField()
     recommendation_letter = models.FileField(upload_to="recommendation_letters")
-    valid = models.BooleanField(default=False)
+    valid = models.BooleanField(null=True, blank=True)
     date_posted = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.applicant_name
+
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'pk': self.pk})
 
