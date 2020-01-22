@@ -1,0 +1,24 @@
+{% extends 'account/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    {% for application in applications %}
+
+    <h1>{{ application.applicant_name }}</h1>
+    {{ application.applicant_address }}
+    {{ application.applicant_phone }}
+    {{ application.applicant_email }}
+    <img src="{{ application.applicant_birth_cert.url }}" class="rounded-circle" width="40" height="40">
+    {{ application.applicant_birth_cert }}
+    {{ application.applicant_national_id }}
+    {{ application.school_name }}
+    {{ application.school_address }}
+    {{ application.academic_level }}
+    {{ application.year_of_completion }}
+    {{ application.reasons }}
+    {{ application.recommendation_letter }}
+    {{ application.valid }}
+    {{ application.date_posted }}
+
+    {% endfor %}
+</div>
+{% endblock %}

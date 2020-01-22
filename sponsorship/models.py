@@ -1,5 +1,5 @@
 from django.db import models
-import datetime
+from django.utils import timezone
 
 
 class Applicant(models.Model):
@@ -12,11 +12,11 @@ class Applicant(models.Model):
     school_name = models.CharField(max_length=255)
     school_address = models.CharField(max_length=255)
     academic_level = models.CharField(max_length=255)
-    year_of_completion = models.DateField()
+    year_of_completion = models.IntegerField()
     reasons = models.TextField()
     recommendation_letter = models.FileField(upload_to="recommendation_letters")
     valid = models.BooleanField(default=False)
-    date_posted = models.DateTimeField(default=datetime.datetime.now)
+    date_posted = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.applicant_name
