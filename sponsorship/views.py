@@ -10,6 +10,10 @@ def home(request):
     return render(request, 'sponsorship/home.html')
 
 
+def about(request):
+    return render(request, 'sponsorship/about.html')
+
+
 class ApplicantFormWizard(SessionWizardView):
     template_name = 'sponsorship/application_form.html'
     file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'temp'))

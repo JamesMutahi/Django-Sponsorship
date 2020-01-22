@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 
 class Applicant(models.Model):
@@ -14,6 +15,8 @@ class Applicant(models.Model):
     year_of_completion = models.DateField()
     reasons = models.TextField()
     recommendation_letter = models.FileField(upload_to="recommendation_letters")
+    valid = models.BooleanField(default=False)
+    date_posted = models.DateTimeField(default=datetime.datetime.now)
 
     def __str__(self):
         return self.applicant_name
